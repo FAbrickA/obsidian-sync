@@ -1,0 +1,2 @@
+.webdav-sync-preview { max-height: 18rem; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; }
+.webdav-sync-ui .setting-item textarea { min-width: min(18rem, 100%); min-height: 5rem; }

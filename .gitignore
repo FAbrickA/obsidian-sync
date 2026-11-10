@@ -1,0 +1,21 @@
+# Reference source and raw public research snapshots are not plugin source.
+/upstream/
+/research/evidence/
+
+# Build, dependencies, and disposable test vaults.
+/node_modules/
+/dist/
+/coverage/
+/.lab/
+/.superpowers/
+/test-vaults/
+/main.js
+*.map
+/debug.log
+
+# Local credentials and Python caches.
+.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]

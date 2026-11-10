@@ -1,0 +1,28 @@
+name: verify
+on: [push, pull_request]
+jobs:
+  verify:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.18.0'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - run: npm run verify:release
+      - run: npm run package
+      - uses: actions/upload-artifact@v4
+        with:
+          name: webdav-sync-${{ matrix.os }}
+          path: |
+            dist/webdav-sync-lab-*.zip

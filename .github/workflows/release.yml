@@ -1,0 +1,44 @@
+name: Prepare installable release
+on:
+  workflow_dispatch:
+    inputs:
+      prerelease:
+        description: Mark as a preview release
+        type: boolean
+        default: true
+permissions:
+  contents: read
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.18.0'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - run: npm run verify:release
+      - run: npm run package
+      - name: Create a draft with standalone installer assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PRERELEASE: ${{ inputs.prerelease }}
+        shell: bash
+        run: |
+          version=$(node -p "require('./manifest.json').version")
+          flags=(--draft)
+          if [[ "$PRERELEASE" == "true" ]]; then flags+=(--prerelease); fi
+          gh release create "$version" --target "$GITHUB_SHA" --title "$version" \
+            --notes-file "docs/releases/$version.md" "${flags[@]}" \
+            dist/main.js dist/manifest.json dist/styles.css dist/LICENSE \
+            dist/THIRD_PARTY_NOTICES.txt dist/PROVENANCE.md dist/SHA256SUMS.json \
+            "dist/webdav-sync-lab-$version.zip"

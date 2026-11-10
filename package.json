@@ -1,0 +1,30 @@
+{
+  "name": "webdav-sync-lab",
+  "version": "0.2.1",
+  "private": true,
+  "type": "module",
+  "description": "A focused, recoverable WebDAV sync plugin for Obsidian.",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "verify:release": "node tools/verify-release.mjs",
+    "package": "python tools/package.py",
+    "prepare:public": "node tools/publication/prepare-public.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test \"tests/**/*.test.ts\""
+  },
+  "engines": {
+    "node": ">=24.12.0 <25"
+  },
+  "devDependencies": {
+    "@types/node": "24.0.0",
+    "@xmldom/xmldom": "0.9.12",
+    "esbuild": "0.25.5",
+    "fake-indexeddb": "6.2.7",
+    "obsidian": "1.5.7",
+    "typescript": "5.8.3"
+  },
+  "dependencies": {
+    "node-diff3": "3.2.1"
+  }
+}

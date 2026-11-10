@@ -1,0 +1,9 @@
+{
+  "id": "webdav-sync-lab",
+  "name": "WebDAV Sync Lab",
+  "version": "0.2.1",
+  "minAppVersion": "1.8.10",
+  "description": "Recoverable WebDAV-only sync with free N-way conflict resolution and retained history.",
+  "author": "WebDAV Sync contributors",
+  "isDesktopOnly": false
+}
